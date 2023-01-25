@@ -86,3 +86,11 @@ body {
 .flickr_pagination .next_page {
   margin-left: 1em;
 }
+
+.like-container {
+  gap: 1rem;
+}
+
+.like-link:focus {
+  color: red;
+}

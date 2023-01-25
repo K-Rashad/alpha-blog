@@ -14,17 +14,25 @@
           <div class="card-body">
             <h5 class="card-title"><%= link_to article.title, article_path(article), class: "text-success" %></h5>
             <p class="card-text"><%= truncate(article.description, length: 100) %></p>
-            <%= link_to "View", article_path(article), class: "btn btn-outline-success"%>
-            <% if logged_in? && (current_user.admin? || article.user == current_user) %>
-              <%= link_to "Edit", edit_article_path(article), class: "btn btn-outline-info"%>
-              <%= link_to "Delete", article_path(article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger"%>
-            <% end %>
+            <div class="d-flex align-items-center justify-content-center like-container">
+              <%= link_to "View", article_path(article), class: "btn btn-outline-success"%>
+              <% if logged_in? && (current_user.admin? || article.user == current_user) %>
+                <%= link_to "Edit", edit_article_path(article), class: "btn btn-outline-info"%>
+                <%= link_to "Delete", article_path(article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger"%>
+                <%= link_to (fa_icon 'thumbs-up 2x', role: "button"), like_path(article),method: :put, remote: true ,class: "like-link" %>
+              <% end %>
+            </div>
           </div>
           <div class="card-footer text-muted">
             <small>
               Created <%= time_ago_in_words(article.created_at) %> ago,
-              edited <%= time_ago_in_words(article.updated_at) %> ago
-            </small>
+              edited <%= time_ago_in_words(article.updated_at) %> ago,<small id='<%="a#{article.id}" %>'>
+               <% if article.likes %>
+                 <%= article.likes %> Likes
+               <% end %>
+
+               </small>
+               </small>
           </div>
         </div>
       </div>
